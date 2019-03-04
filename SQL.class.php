@@ -15,6 +15,16 @@
  */
 namespace OP\UNIT;
 
+/** Used class
+ *
+ * @created   2019-03-04
+ */
+use \OP\OP_CORE;
+use \OP\OP_UNIT;
+use \OP\IF_UNIT;
+use \OP\IF_SQL;
+use \OP\IF_DATABASE;
+
 /** SQL
  *
  * @created   2016-11-29
@@ -23,17 +33,17 @@ namespace OP\UNIT;
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */
-class SQL
+class SQL implements IF_UNIT, IF_SQL
 {
 	/** trait
 	 *
 	 */
-	use \OP_CORE;
+	use OP_CORE, OP_UNIT;
 
 	/** Count
 	 *
 	 * @param   array       $config
-	 * @param  \IF_DATABASE $DB
+	 * @param   IF_DATABASE $DB
 	 * @return  string      $query
 	 */
 	function Count($args, $DB)
@@ -43,21 +53,10 @@ class SQL
 		return SQL\Select::Get($args, $DB);
 	}
 
-	/** Generate delete sql statement.
-	 *
-	 * @param   array       $config
-	 * @param  \IF_DATABASE $DB
-	 * @return  string      $query
-	 */
-	function Delete($args, $DB)
-	{
-		return SQL\Delete::Get($args, $DB);
-	}
-
 	/** Generate insert sql statement.
 	 *
 	 * @param   array       $config
-	 * @param  \IF_DATABASE $DB
+	 * @param   IF_DATABASE $DB
 	 * @return  string      $query
 	 */
 	function Insert($args, $DB)
@@ -68,7 +67,7 @@ class SQL
 	/** Generate select sql statement.
 	 *
 	 * @param   array       $config
-	 * @param  \IF_DATABASE $DB
+	 * @param   IF_DATABASE $DB
 	 * @return  string      $query
 	 */
 	function Select($args, $DB)
@@ -76,10 +75,32 @@ class SQL
 		return SQL\Select::Get($args, $DB);
 	}
 
+	/** Generate update sql statement.
+	 *
+	 * @param   array       $config
+	 * @param   IF_DATABASE $DB
+	 * @return  string      $query
+	 */
+	function Update($args, $DB)
+	{
+		return SQL\Update::Get($args, $DB);
+	}
+
+	/** Generate delete sql statement.
+	 *
+	 * @param   array       $config
+	 * @param   IF_DATABASE $DB
+	 * @return  string      $query
+	 */
+	function Delete($args, $DB)
+	{
+		return SQL\Delete::Get($args, $DB);
+	}
+
 	/** Generate show sql statement.
 	 *
 	 * @param   array       $config
-	 * @param  \IF_DATABASE $DB
+	 * @param   IF_DATABASE $DB
 	 * @return  string      $query
 	 */
 	function Show($args=null, $DB)
@@ -106,16 +127,5 @@ class SQL
 
 		//	...
 		return SQL\Show::Database($DB);
-	}
-
-	/** Generate update sql statement.
-	 *
-	 * @param   array       $config
-	 * @param  \IF_DATABASE $DB
-	 * @return  string      $query
-	 */
-	function Update($args, $DB)
-	{
-		return SQL\Update::Get($args, $DB);
 	}
 }
